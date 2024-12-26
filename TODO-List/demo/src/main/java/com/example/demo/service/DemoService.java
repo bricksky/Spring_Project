@@ -1,11 +1,13 @@
 package com.example.demo.service;
 
 import com.example.demo.mapper.DemoMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
 @Service
+//@RequiredArgsConstructor
 public class DemoService {
     private final DemoMapper demoMapper;
 

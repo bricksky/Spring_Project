@@ -2,8 +2,8 @@
 
 <mapper namespace="com.example.mapper.DemoMapper">
     <select id="getUser" resultType="map">
-    SELECT id, name
-    FROM USERS
-    WHERE id = #{userId}
+        SELECT id, name
+        FROM USERS
+        WHERE id = #{userId}
     </select>
 </mapper>
