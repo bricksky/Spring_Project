@@ -2,9 +2,7 @@ package com.example.demo.controller;
 
 import lombok.RequiredArgsConstructor;
 import com.example.demo.service.DemoService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -21,5 +19,10 @@ public class DemoController {
     @GetMapping("/{userId}")
     public Map<String, String> getUser(@PathVariable("userId") String userId) {
         return demoService.getUser(userId);
+    }
+
+    @PostMapping("/")
+    public void setUser(@RequestBody UserRequest request) {
+        demoService.setUser(request);
     }
 }
