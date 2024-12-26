@@ -17,6 +17,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
+//이 클래스가 데이터베이스의 테이블을 나타내는 클래스임을 JPA에게 알려주는 역할
+
 public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
