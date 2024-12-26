@@ -21,10 +21,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'com.h2database:h2'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4' // 버전을 명시적으로 지정
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
 }
+
 
 tasks.named('test') {
 	useJUnitPlatform()
