@@ -12,10 +12,7 @@ package com.example.todolist;
  */
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,6 +31,22 @@ public class TodoController {
         todoRepository.save(todo);   // 데이터베이스에 저장
         return todo;    // 추가된 TODO 항목 반환
     }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteTodo(@PathVariable Long id){
+        todoRepository.deleteById(id);
+    }
+
+    @PutMapping("/update/{id}")
+    public Todo updateTodo(@PathVariable Long id, @RequestParam(required = false) Boolean completed){
+        Todo todo = todoRepository.findById(id).orElseThrow();
+        if(completed != null){
+            todo.setCompleted(completed);
+        }
+        todoRepository.save(todo);
+        return todo;
+    }
+
 
     // 모든 TODO 항목 조회
     @GetMapping("/todos")
