@@ -11,5 +11,7 @@ JpaRepository 인터페이스를 상속받아, 기본적인 CRUD(Create, Read, U
  */
 
 
-public class TodoRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface TodoRepository extends JpaRepository<Todo, Long> {
 }
