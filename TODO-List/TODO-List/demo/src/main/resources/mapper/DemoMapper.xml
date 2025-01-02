@@ -1,0 +1,16 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.DemoMapper">
+    <!-- 사용자 정보를 조회하는 SQL -->
+    <select id="getUser" resultType="map">
+        SELECT id, name
+        FROM USERS
+        WHERE id = #{userId}
+    </select>
+
+    <!-- 사용자 정보를 데이터베이스에 추가하는 SQL -->
+    <insert id="setUser" parameterType="com.example.demo.controller.UserRequest">
+        INSERT INTO USERS (id, name)
+        VALUES (#{id}, #{name})
+    </insert>
+</mapper>
