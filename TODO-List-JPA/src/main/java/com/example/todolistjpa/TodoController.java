@@ -1,10 +1,7 @@
 package com.example.todolistjpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -28,5 +25,20 @@ public class TodoController {
     @GetMapping("/todos")
     public List<Todo> getTodos(){
         return todoRepository.findAll();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteTodo(@PathVariable Long id){
+        todoRepository.deleteById(id);
+    }
+
+    @PutMapping("/update/{id}")
+    public Todo updateTodo(@PathVariable Long id, @RequestParam(required = false) Boolean completed) {
+        Todo todo = todoRepository.findById(id).orElseThrow();
+        if (completed != null) {
+            todo.setCompleted(completed);
+        }
+        todoRepository.save(todo);
+        return todo;
     }
 }
