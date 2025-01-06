@@ -27,9 +27,9 @@ public class MemberController {
     // 로그인 페이지
     @GetMapping("/login")
     public String getLogin(HttpServletRequest request, Model model) {
-        String referer = request.getHeader("Referer");
+        String referer = request.getHeader("referer");
         request.getSession().setAttribute("prevPage", referer);
-        log.info("uri={}", referer);
+        log.info("uri={}: ", referer);
         model.addAttribute("login", new LoginDto());
         return "login";
     }
@@ -44,14 +44,17 @@ public class MemberController {
             Member member = memberService.findByUserName(username);
             session.setAttribute("loginMember", member);
 
-            String prevPage = (String) request.getSession().getAttribute("prevPage");
+            // 저장한 이전 페이지 주소를 가져옴
+            String prevPage = (String) session.getAttribute("prevPage");
+
+            // 세션에 페이지 주소 삭제
             request.getSession().removeAttribute("prevPage");
 
-            return "redirect:" + (prevPage != null ? prevPage : "/");
+            return "redirect: " + (prevPage != null ? prevPage : "/");  // 로그인 성공 시 홈페이지로 리다이렉트
         }
 
         model.addAttribute("error", "비밀번호 또는 아이디가 올바르지 않습니다.");
-        return "login";
+        return "login";  // 로그인 실패 시 로그인 페이지 유지
     }
 
     // 로그아웃 처리
@@ -64,24 +67,24 @@ public class MemberController {
     // 회원가입 페이지
     @GetMapping("/join")
     public String getJoinPage(Model model) {
-        model.addAttribute("member", new MemberDto()); // 회원가입 폼에 사용할 객체 전달
-        return "joinMember"; // 회원가입 템플릿 반환
+        model.addAttribute("member", new MemberDto());
+        return "joinMember";
     }
 
     // 회원가입 처리
-    @PostMapping("/joinMember")
+    @PostMapping("/createMember")
     public String createMember(@Valid @ModelAttribute("member") MemberDto memberDto,
                                BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "joinMember"; // 유효성 검증 실패 시 다시 회원가입 페이지로 반환
+            return "joinMember";
         }
-        memberService.save(memberDto); // 서비스 계층에서 회원 저장 로직 호출
-        return "redirect:/login"; // 성공 시 로그인 페이지로 리다이렉션
+        memberService.save(memberDto);
+        return "redirect:/login";
     }
 
     // 잘못된 GET 요청 처리
     @GetMapping("/createMember")
     public String handleCreateMemberGet() {
-        return "redirect:/join"; // 회원가입 페이지로 리다이렉트
+        return "redirect:/join";
     }
 }
